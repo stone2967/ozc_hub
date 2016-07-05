@@ -1,0 +1,76 @@
+#-*- coding: UTF-8 -*-
+#!name : run_cmd
+#2016.06.12 第一节课作业
+
+import os
+import time
+
+def install_apk(name):
+    # 安装
+    print "apk name is " + name
+    print "install start"
+    os.popen("adb install " + name)
+    print "finish install"
+
+def uninstall_apk(name):
+    # 卸载
+    print "package name is " + name
+    print "uninstall start"
+    os.popen('adb uninstall ' + name)
+    print "finish uninstall"
+
+#获取device id
+def get_device_id()：
+    for device in os.popen('adb devices'):
+    # print line
+        if "device" in device and "List" not in device:
+            device_list = device.split('	')
+            break
+	return device_list
+#多台手机连接PC
+#获取连接的设备的device id
+device = device_id()
+adb -s device[0] reboot
+adb -s device[1] reboot
+	
+				
+#通过AAPT解析指定apk包，并获取apk包名和launcher名并输出
+def get_apk_package():
+    for line in os.popen('aapt d badging 111.apk'):
+        if "package: name=" in line:
+            a = line.split("'")
+            print "apk package is " + a[1]
+
+        if "launchable-activity" in line:
+            b = line.split("'")
+            print "launcher" + b[1]
+
+        break
+
+
+#点击手机屏幕某个位置(a,b)
+def cuckbyAdb(a,b)
+    x = a
+    y = b
+    os.popen('adb shell input tap'+ ' '+ x + ' ' + y)
+	
+	
+##确认手机是否已安装某个apk，若是，则卸载，否则安装
+# installed = 0 #标记
+# #aapt d badging baidushoujizhushou_16789458.apk
+# for package in os.popen('aapt d badging 111.apk'):
+    # #print line
+    # if "package: name" in package:
+        # a = package.split("'")
+
+        # for apk in os.popen('adb shell pm list packages'):
+            # if a[1] in apk:
+                # print '目标apk已安装，需卸载'
+                # uninstall_apk(a[1])
+                # installed= 1
+                # break
+        # if installed is 0:
+            # install_apk('111.apk')
+    # break
+
+print "done"
